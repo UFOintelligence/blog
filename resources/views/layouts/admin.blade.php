@@ -20,6 +20,7 @@
 
         <!-- Styles -->
         @livewireStyles
+        @stack('css')
     </head>
     <body class="font-sans antialiased sm:overflow-auto"
     :class="{'overflow-hidden': open}" x-data="{open: false}">
@@ -67,7 +68,7 @@
         @endif
 
 
-
+@stack('js')
     </body>
 
 </html>
