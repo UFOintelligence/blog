@@ -1,18 +1,30 @@
 <x-admin-layout>
 
+
+    <div class="flex justify-end mb-4">
+        <a class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+         href="{{route('admin.posts.create')}}">
+            Nuevo
+        </a>
+    </div>
+
     <ul class="space-y-8">
       @foreach ($posts as $post )
-      <li class="grid grid-cols-2 gap-4">
+      <li class="grid grid-cols-1 lg:grid-cols-2 gap-4">
        <div>
-        <img class="aspect-[16/9] object-cover object-center" src=" {{$post->image_path}}" alt="">
 
+        <a href="{{route('admin.posts.edit', $post)}}">
+        <img class="aspect-[16/9] object-cover object-center w-full rounded-lg " src=" {{$post->image}}" alt="">
+
+
+        </a>
        </div>
 
             <div>
-                <h1 class="text-xl font-semibold">
+                <a href="{{route('admin.posts.edit', $post)}}" class="text-xl font-semibold">
                     {{$post->title}}
 
-                </h1>
+                </a>
                     <hr class="mb-1 mt-1">
                     <span @class(['bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300' => $post->published,
                     'bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5
@@ -22,7 +34,7 @@
                     </span>
 
                     <p class="text-gray-700 mt-2">
-                        {{$post->excerpt}}
+                        {{Str::limit($post->excerpt, 100)}}
 
                     </p>
 
@@ -44,8 +56,8 @@
       @endforeach
 
     </ul>
-<div class="mt-4">
-    {{$posts->links()}}
+    <div class="mt-4">
+        {{$posts->links()}}
 
-</div>
+    </div>
 </x-admin-layout>

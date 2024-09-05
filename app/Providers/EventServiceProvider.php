@@ -28,6 +28,8 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        \App\Models\Post::observe(\App\Observers\PostObserver::class);
+
     }
 
     /**

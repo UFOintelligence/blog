@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Tags;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/admin', function(){
-    return "Hola desde el administrador";
-});
+Route::get('/tags', function(Request $request){
+$term = $request->term ?? '';
+
+$tags = Tags::select('id', 'name as text')->where('name', 'LIKE', '%' .$term . '%')->limit(10)->get();
+
+return $tags;
+
+
+})->name('api.tags.index');
