@@ -7,6 +7,8 @@ use App\Models\Post;
 use App\Models\Tags;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class PostController extends Controller
 {
@@ -18,7 +20,7 @@ class PostController extends Controller
     public function index()
     {
         //
-        $posts = Post::latest('id')->paginate(10);
+        $posts = Post::where('user_id', auth()->id())->latest('id')->paginate(10);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -65,7 +67,8 @@ class PostController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the sp´
+     * -ecified resource.
      *
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
@@ -74,6 +77,8 @@ class PostController extends Controller
     {
         //
         $categories = Category::all();
+        //$tags = Tags::all();
+        //return $tags;
 
 
         return view('admin.posts.edit', compact('post','categories'));
@@ -92,20 +97,58 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //
+
+       /*  // return $request->all(); */
+  //$tags = Tags::all();
         $request->validate([
             'title'=> 'required',
             'slug'=> 'required|unique:posts,slug,' . $post->id,
             'category_id'=> 'required|exists:categories,id',
             'excerpt'=> $request->published ? 'required' : 'nullable',
-            'body'=> $request->published ? 'required' : 'nullable',
+           'body'=> $request->published ? 'required' : 'nullable',
             'published'=> 'required|boolean',
+            'tags'=> 'nullable|array',
+            'image'=> 'nullable|image',
         ]);
 
+        $data = $request->all();
 
-        $post->tags()->sync($request->tags);
+       $tags = [];
+
+       foreach($request->tags ?? [] as $name){
+
+         $tag = Tags::firstOrCreate([
+
+            'name' => $name,
+
+         ]);
+
+       $tags[] = $tag->id;
 
 
-        $post->update($request->all());
+       }
+
+
+        $post->tags()->sync($tags);
+
+         if($request->file('image')){
+
+            if($post->image_path){
+
+                Storage::delete($post->image_path);
+            }
+
+             $file_name = $request->slug . '.' . $request->file('image')->getClientOriginalExtension();
+
+         $data ['image_path'] =  Storage::disk('s3')->putFileAs('posts', $request->image, $file_name, 'public');
+
+            // $data ['image_path'] = $request->file('image')->storeAs('posts', $file_name,
+            //  ['disk'=> 's3', 'visibility' => 'public']);
+
+
+         }
+
+        $post->update($data);
 
         session()->flash('swal', [
             'icon' => 'success',

@@ -18,6 +18,7 @@ class PostObserver
     public function updating(Post $post){
 
         if($post->published && !$post->published_at ){
+            $post->published_at = now();
 
         }
 

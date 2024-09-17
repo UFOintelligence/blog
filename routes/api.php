@@ -23,9 +23,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/tags', function(Request $request){
 $term = $request->term ?? '';
 
-$tags = Tags::select('id', 'name as text')->where('name', 'LIKE', '%' .$term . '%')->limit(10)->get();
+$tags = Tags::select('name')
+->where('name', 'LIKE', '%' .$term . '%')
+->limit(10)->get()->map(function($tag){
+
+    return [
+        'id' => $tag->name,
+        'name' => $tag->name
+    ];
+
+
+});
 
 return $tags;
-
 
 })->name('api.tags.index');
