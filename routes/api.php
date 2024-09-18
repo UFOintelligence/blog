@@ -20,21 +20,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/tags', function(Request $request){
-$term = $request->term ?? '';
+ Route::get('/tags', function(Request $request){
 
-$tags = Tags::select('name')
-->where('name', 'LIKE', '%' .$term . '%')
-->limit(10)->get()->map(function($tag){
+
+   $term = $request->term ?? '';
+
+   $tags = Tags::select('name')
+   ->where('name', 'LIKE', '%' . $term . '%')
+   ->limit(10)->get()
+   ->map(function($tag){
+
 
     return [
         'id' => $tag->name,
-        'name' => $tag->name
+        'text' => $tag->name
     ];
 
+   });
 
-});
+ return $tags;
 
-return $tags;
-
-})->name('api.tags.index');
+ })->name('api.tags.index');

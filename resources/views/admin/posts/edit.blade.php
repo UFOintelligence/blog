@@ -2,7 +2,6 @@
 
     @push('css')
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
     @endpush
     <form action="{{ route('admin.posts.update', $post) }}" method="POST" enctype="multipart/form-data">
 
@@ -80,15 +79,19 @@
             <x-label class="mb-1">
                 Etiquetas
             </x-label>
-            <select class="tags-multiple"  name="tags[]" multiple="multiple" style="width: 100%">
 
-                @foreach ($post->tags as $tag)
-                    <option value="{{ $tag->name }}" selected>
-                        {{ $tag->name }}
-                    </option>
-                @endforeach-
-                ...
+            <select class="tag-multiple" name="tags[]" multiple="multiple" style="width: 100%">
+
+               @foreach ($post->tags as $tag)
+               <option value="{{ $tag->name }}" selected>
+                {{ $tag->name }}
+            </option>
+               @endforeach
+
+
             </select>
+
+
         </div>
 
         <div class="mb-4">
@@ -128,44 +131,44 @@
     </form>
 
 
-
-    <form action="{{route('admin.posts.destroy', $post ) }}" method="POST" id="formDelete">
+    <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" id="formDelete">
         @csrf
         @method('DELETE')
 
     </form>
 
     @push('js')
-
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
         <script>
             $(document).ready(function() {
-                $('.tags-multiple').select2({
+                $('.tag-multiple').select2({
                     tags: true,
                     tokenSeparators: [',', ' '],
                     ajax: {
                         url: "{{route('api.tags.index')}}",
                         dataType: 'json',
                         delay: 250,
-                        data: function(params) {
+                        data: function(params){
+
                             return {
+                         $term: params.term
 
-                                $term: params.term
-
-                            }
+                       }
 
                         },
                         processResults: function(data) {
-                            return {
+                           return {
                                 results: data
                             }
                         },
                     }
                 });
             });
+
+
 
             function deletePost() {
 
@@ -196,12 +199,7 @@
                 $imgPreview.src = objectURL;
 
             }
-
-
-
-</script>
-
-
+        </script>
     @endpush
 
 </x-admin-layout>

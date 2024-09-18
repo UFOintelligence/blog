@@ -77,8 +77,8 @@ class PostController extends Controller
     {
         //
         $categories = Category::all();
-        //$tags = Tags::all();
-        //return $tags;
+        // $tags= Tags::all();
+        // return $tags;
 
 
         return view('admin.posts.edit', compact('post','categories'));
@@ -96,10 +96,6 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
-
-       /*  // return $request->all(); */
-  //$tags = Tags::all();
         $request->validate([
             'title'=> 'required',
             'slug'=> 'required|unique:posts,slug,' . $post->id,
@@ -131,6 +127,7 @@ class PostController extends Controller
 
         $post->tags()->sync($tags);
 
+
          if($request->file('image')){
 
             if($post->image_path){
@@ -149,7 +146,7 @@ class PostController extends Controller
          }
 
         $post->update($data);
-
+        //$post->update($request->all());
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Bien hecho!',
