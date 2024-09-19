@@ -8,7 +8,7 @@ use App\Models\Tags;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\support\facades\Gate;
 
 class PostController extends Controller
 {
@@ -75,7 +75,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        //protegiendo la ruta del autor (usuario)
+        if(!Gate::allows('author', $post)){
+
+            abort(403, 'No puede editar este post porque  no le pertenece');
+        }
+
+        //$this->authorize('author', $post);
         $categories = Category::all();
         // $tags= Tags::all();
         // return $tags;
@@ -123,7 +129,6 @@ class PostController extends Controller
 
 
        }
-
 
         $post->tags()->sync($tags);
 
