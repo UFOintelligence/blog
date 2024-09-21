@@ -25,6 +25,12 @@
      'url'  => route('admin.roles.index'),
      'active' => request()->routeIs('admin.roles.*'),
      'icon' => 'fa-solid fa-user-tag',
+],
+[
+     'name' => 'Permisos',
+     'url'  => route('admin.permission.index'),
+     'active' => request()->routeIs('admin.permission.*'),
+     'icon' => 'fa-solid fa-key',
 ]
 
 ];

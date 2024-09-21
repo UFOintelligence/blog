@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-class RoleController extends Controller
+use Spatie\Permission\Models\Permission;
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,9 @@ class RoleController extends Controller
     public function index()
     {
         //
+        $permissions = Permission::all();
 
-        $roles = Role::all();
-
-        return view('admin.roles.index', compact('roles'));
+        return view('admin.permission.index', compact('permissions'));
     }
 
     /**
@@ -29,7 +28,7 @@ class RoleController extends Controller
     public function create()
     {
         //
-        return view('admin.roles.create');
+        return view('admin.permission.create');
     }
 
     /**
@@ -41,20 +40,19 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //
-
-         $request->validate([
-            'name'=> ['required', 'unique:roles,name']
+        $request->validate([
+            'name'=> ['required', 'unique:permissions,name']
          ]);
 
-         $rol = Role::create($request->all());
+         $permissions = Permission::create($request->all());
 
          session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Bien hecho!',
-            'text' => 'el rol se creó corretamente'
+            'text' => 'el permiso se creó corretamente'
         ]);
 
-        return redirect()->route('admin.roles.edit', $rol);
+        return redirect()->route('admin.permissions.index', $permissions);
     }
 
     /**
@@ -63,10 +61,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show($id)
     {
         //
-        return view('admin.roles.show');
     }
 
     /**
@@ -75,11 +72,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit(Permission $permission)
     {
         //
-
-        return view('admin.roles.edit', compact('role'));
+        return view('admin.permission.edit', compact('permission'));
     }
 
     /**
@@ -89,24 +85,25 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Permission $permission)
     {
+        //
         $request->validate([
 
-            'name' => 'required|string|max:255', 'unique:roles,name' . $role->id
+            'name' => 'required|string|max:255', 'unique:permissions,name' . $permission->id
         ]
 
         );
 
-        $role->update($request->all());
+        $permission->update($request->all());
 
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Bien hecho!',
-            'text' => 'el rol se actualizó corretamente'
+            'text' => 'el permiso se actualizó corretamente'
         ]);
 
-        return redirect()->route('admin.roles.index', $role);
+        return redirect()->route('admin.permission.edit', $permission);
     }
 
     /**
@@ -115,17 +112,17 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(Permission $permission)
     {
         //
-        $role->delete();
+        $permission->delete();
 
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Bien hecho!',
-            'text' => 'el rol se eliminó corretamente'
+            'text' => 'el permiso se eliminó corretamente'
         ]);
 
-        return redirect()->route('admin.roles.index', $role);
+        return redirect()->route('admin.permission.index', $permission);
     }
 }

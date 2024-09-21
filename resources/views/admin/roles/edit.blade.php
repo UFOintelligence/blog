@@ -1,8 +1,49 @@
 <x-admin-layout>
+    <form action="{{route('admin.roles.update', $role)}}" method="POST" class="bg-white rounded-lg p-6 shadow-lg">
+
+        @csrf
+        @method('PUT')
+
+
+  <x-validation-errors class="mb-4"/>
+    <div class="mb-4">
+        <x-label>Actualizar Nombre</x-label>
+
+        <x-input class="w-full" placeholder="Escriba el nombre del rol" name="name"
+        value="{{$role->name}}"/>
+
+    </div>
+
+    <div class="flex justify-end mb-2">
+
+            <x-danger-button type="button" class="mr-2" onclick="deleteRol()">Eliminar</x-danger-button>
+
+
+            <x-button> Actualizar</x-button>
+
+    </div>
+    </form>
 
 
 
+    <form action="{{route('admin.roles.destroy', $role)}}" method="POST" id="formDelete">
+        @csrf
+        @method('DELETE')
+
+    </form>
+
+    @push('js')
+
+    <script>
+    function deleteRol(){
+
+    let form = document.getElementById('formDelete');
+    form.submit();
+
+    }
+    </script>
+
+    @endpush
 
 
-
-</x-admin-layout>
+    </x-admin-layout>
