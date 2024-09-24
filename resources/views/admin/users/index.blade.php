@@ -1,16 +1,5 @@
 <x-admin-layout>
 
-    <div class="flex justify-end mb-4">
-        <a class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-         href="{{route('admin.roles.create')}}">
-            Nuevo
-        </a>
-    </div>
-
-
-
-
-
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -19,8 +8,12 @@
                     ID
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Nombre
-                </th>
+                    Nombre
+                  </th>
+
+                  <th scope="col" class="px-6 py-3">
+                   Email
+                  </th>
 
                 <th scope="col" class="px-6 py-3">
                     Accion
@@ -28,27 +21,37 @@
             </tr>
         </thead>
         <tbody>
-          @foreach ( $roles as $rol )
+          @foreach ( $users as $user )
           <tr class="bg-white dark:bg-gray-800">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-               {{$rol->id}}
+               {{$user->id}}
             </th>
             <td class="px-6 py-4">
-                {{$rol->name}}
+                {{$user->name}}
+            </td>
+            <td class="px-6 py-4">
+                {{$user->email}}
             </td>
 
+
             <td class="px-6 py-4">
-                <a href="{{route('admin.roles.edit', $rol )}}">Editar</a>
+                <a href="{{route('admin.users.edit', $user )}}">Editar</a>
             </td>
+
+
+
            @endforeach
 
 
             </tr>
         </tbody>
     </table>
+
+
 </div>
 
 
-
-
+<div class="mt-4">
+    {{ $users->links() }}
+</div>
 </x-admin-layout>

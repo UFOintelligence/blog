@@ -14,6 +14,22 @@
 
     </div>
 
+    <div class="mb-4">
+        <ul>
+            @foreach ($permissions as $permission )
+            <li>
+                <label>
+                    <x-checkbox name="permissions[]"
+                    value="{{$permission->id}}"
+                    :checked="in_array($permission->id, old('permissions', $role->permissions->pluck('id')->toArray()))"/>
+                    {{$permission->name}}
+                </label>
+            </li>
+
+            @endforeach
+        </ul>
+    </div>
+
     <div class="flex justify-end mb-2">
 
             <x-danger-button type="button" class="mr-2" onclick="deleteRol()">Eliminar</x-danger-button>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Admin\PermissionController;
+use Spatie\Permission\Models\Permission;
 class RoleController extends Controller
 {
     /**
@@ -29,7 +31,9 @@ class RoleController extends Controller
     public function create()
     {
         //
-        return view('admin.roles.create');
+
+        $permissions = Permission::all();
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -42,11 +46,16 @@ class RoleController extends Controller
     {
         //
 
+
+
+
          $request->validate([
-            'name'=> ['required', 'unique:roles,name']
+            'name'=> ['required', 'unique:roles,name'],
+            'permisions'=> 'nullable|array',
          ]);
 
-         $rol = Role::create($request->all());
+         $role = Role::create($request->all());
+         $role->permissions()->attach($request->permissions);
 
          session()->flash('swal', [
             'icon' => 'success',
@@ -54,7 +63,8 @@ class RoleController extends Controller
             'text' => 'el rol se creó corretamente'
         ]);
 
-        return redirect()->route('admin.roles.edit', $rol);
+        return redirect()->route('admin.roles.edit', $role);
+
     }
 
     /**
@@ -78,8 +88,11 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         //
+        $permissions = Permission::all();
+        // $permissions = $role->Permission->pluck('id')->toArray();
+        // dd(in_array(1, $permissions));
 
-        return view('admin.roles.edit', compact('role'));
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -90,15 +103,18 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Role $role)
+
     {
+
         $request->validate([
 
-            'name' => 'required|string|max:255', 'unique:roles,name' . $role->id
-        ]
-
-        );
+            'name' => 'required|string|max:255', 'unique:roles,name' . $role->id,
+            'permissions' => 'nullable|array'
+        ]);
 
         $role->update($request->all());
+        $role->permissions()->sync($request->permissions);
+
 
         session()->flash('swal', [
             'icon' => 'success',

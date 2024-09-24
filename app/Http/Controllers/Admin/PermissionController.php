@@ -52,7 +52,7 @@ class PermissionController extends Controller
             'text' => 'el permiso se creó corretamente'
         ]);
 
-        return redirect()->route('admin.permissions.index', $permissions);
+        return redirect()->route('admin.permission.index', $permissions);
     }
 
     /**

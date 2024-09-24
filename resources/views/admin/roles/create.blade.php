@@ -10,9 +10,23 @@
 
             <x-input  name="name"  class="w-full" placeholder="Ingrese el nombre"
             value="{{old('name')}}"/>
-
-
            </div>
+
+           <div class="mb-4">
+        <ul>
+            @foreach ($permissions as $permission )
+            <li>
+                <label>
+                    <x-checkbox name="permissions[]"
+                    value="{{$permission->id}}"
+                    :checked="in_array($permission->id, old('permissions', []))"/>
+                    {{$permission->name}}
+                </label>
+            </li>
+
+            @endforeach
+        </ul>
+    </div>
 
           <div  class="flex justify-end">
             <x-button>Crear rol</x-button>
