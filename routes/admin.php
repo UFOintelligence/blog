@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function(){
  return view('admin.dashboard');
 
-})->name('dashboard')->middleware(['can:Acceso al dashboard'])
- ->name('dashboar');
+})->middleware(['can:Acceso al dashboard'])
+ ->name('dashboard');
 
 Route::resource('/categories', CategoryController::class)->except('show')
 ->middleware(['can:Gestion de categorias']);
@@ -25,4 +25,5 @@ Route::resource('/roles', RoleController::class)->except('show')
 Route::resource('/permission', permissionController::class)->except('show')
  ->middleware(['can:Gestion de permisos']);
 
-Route::resource('/users', UserController::class)->except('show', 'create', 'store')->middleware(['can:Gestion de usuarios']);
+Route::resource('/users', UserController::class)->except('show', 'create', 'store')
+->middleware(['can:Gestion de usuarios']);

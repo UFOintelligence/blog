@@ -1,4 +1,20 @@
-<x-admin-layout>
+<x-admin-layout :breadcrumb="[
+    [
+'name' => 'Home',
+'url'  => route('dashboard'),
+
+],
+[
+'name' => 'Articulos',
+'url'  => route('admin.posts.index'),
+
+],
+[
+'name' => 'Nuevo',
+
+]
+
+]">
 
     <form action="{{route('admin.posts.store')}}" method="POST"
      x-data="data()"
@@ -9,9 +25,6 @@
      <x-validation-errors class="mb-4"/>
 
     <div class="mb-4">
-     <h1 class="text-3xl  font-semibold">
-        Nuevo articulo
-    </h1>
 
 
      <x-label class="mb-2">

@@ -19,7 +19,6 @@ class UserController extends Controller
         //
         $users = User::paginate(5);
 
-       // $users = User::latest('id')->paginate(5);
 
         return view('admin.users.index', compact('users'));
     }
@@ -53,24 +52,20 @@ class UserController extends Controller
 
             'name' => 'required|string|max:255',
             'email' => "nullable|string|email|max:255|unique:users,email,{$user->id}",
-            'password' => 'nullable|string|min:8|confirmed',
+            'password' => 'required|string|min:8|confirmed',
 
 
         ]);
 
 
 
-        //$user->update($request->all());
-
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $user->update($request->all());
 
 
-        if($user->password){
 
       $user->password = bcrypt($request->password);
 
-        }
+
 
         $user->roles()->sync($request->roles);
 

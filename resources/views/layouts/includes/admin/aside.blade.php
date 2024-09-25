@@ -1,8 +1,8 @@
 @php
     $links = [
         [
-     'name' => 'Dashboar',
-     'url'  => route('dashboard'),
+     'name' => 'Dashboard',
+     'url'  => route('admin.dashboard'),
      'active' => request()->routeIs('admin.dashboard'),
      'icon' => 'fa-solid fa-gauge-high',
      'can' => 'Acceso al dashboard',
@@ -62,7 +62,7 @@ transition-transform -translate-x-full bg-white border-r
        <ul class="space-y-2 font-medium">
          @foreach ($links as $link )
 
-     @canany($link['can'])
+     @can($link['can'])
 
      <li>
 
@@ -78,7 +78,7 @@ transition-transform -translate-x-full bg-white border-r
  </li>
 
 
-   @endcanany
+   @endcan
 
 
          @endforeach
@@ -86,3 +86,4 @@ transition-transform -translate-x-full bg-white border-r
        </ul>
     </div>
  </aside>
+

@@ -1,4 +1,20 @@
-<x-admin-layout>
+<x-admin-layout :breadcrumb="[
+    [
+'name' => 'Home',
+'url'  => route('dashboard'),
+
+],
+[
+'name' => 'Articulos',
+'url'  => route('admin.posts.index'),
+
+],
+[
+'name' => 'Editar',
+
+]
+
+]">
 
     @push('css')
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -41,12 +57,9 @@
         </div>
 
 
-        <div class="mb-4">
-            <x-label class="mb-1">
-                Slug
-            </x-label>
+          {{-- input oculto --}}
 
-            <x-input class="w-full" placeholder="slug" name="slug" value="{{ old('slug', $post->slug) }}"></x-input>
+            <x-input  type="hidden" class="w-full" placeholder="slug" name="slug" value="{{ old('slug', $post->slug) }}"></x-input>
         </div>
 
 

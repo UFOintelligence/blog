@@ -1,4 +1,20 @@
-<x-admin-layout>
+<x-admin-layout :breadcrumb="[
+    [
+'name' => 'Home',
+'url'  => route('dashboard'),
+
+],
+[
+'name' => 'Categorias',
+'url'  => route('admin.categories.index'),
+
+],
+[
+'name' => 'Editar',
+
+]
+
+]">
 
     <form action="{{route('admin.categories.update', $category)}}" method="POST"
      class="bg-white rounded-lg p-6 shadow-lg">

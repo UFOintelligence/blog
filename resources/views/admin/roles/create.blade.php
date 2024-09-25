@@ -1,4 +1,20 @@
-<x-admin-layout>
+<x-admin-layout :breadcrumb="[
+    [
+'name' => 'Home',
+'url'  => route('dashboard'),
+
+],
+[
+'name' => 'Roles',
+'url'  => route('admin.roles.index'),
+
+],
+[
+'name' => 'Nuevo',
+
+]
+
+]">
 
     <div class="bg-white shadow rounded-lg p-6">
         <form action="{{route('admin.roles.store')}}" method="POST">

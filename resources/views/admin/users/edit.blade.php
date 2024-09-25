@@ -1,4 +1,20 @@
-<x-admin-layout>
+<x-admin-layout :breadcrumb="[
+    [
+'name' => 'Home',
+'url'  => route('dashboard'),
+
+],
+[
+'name' => 'Usuarios',
+'url'  => route('admin.users.index'),
+
+],
+[
+'name' => 'Editar',
+
+]
+
+]">
     <form action="{{route('admin.users.update', $user)}}" method="POST" class="bg-white rounded-lg p-6 shadow-lg">
 
         @csrf
@@ -27,6 +43,7 @@
         <x-label>Actualizar Password</x-label>
 
         <x-input  type="password" class="w-full" placeholder="Escriba el password" name="password"
+         required
         />
 
     </div>
@@ -35,7 +52,7 @@
         <x-label>Confirmar Password</x-label>
 
         <x-input  type="password" class="w-full" placeholder="confirme el password"
-        name="password_confirmation"
+        name="password_confirmation" required
         />
 
     </div>
