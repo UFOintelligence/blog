@@ -19,6 +19,8 @@
    </a>
  </x-slot>
 
+ @if($categories->count())
+
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
@@ -63,5 +65,13 @@
     {{$categories->links()}}
 </div>
 
+
+@else
+
+<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+    <span class="font-medium">Información</span> Todavía no tienes categorias  agregados.
+  </div>
+
+  @endif
 </x-admin-layout>
 

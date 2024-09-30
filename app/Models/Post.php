@@ -19,6 +19,14 @@ class Post extends Model
         'user_id',
         'published',
         'image_path',
+        'published_at',
+
+    ];
+
+    protected $casts =  [
+        'published'=> 'boolean',
+        'published_at' => 'datetime',
+
     ];
 
     protected  function title(): Attribute{
@@ -41,8 +49,8 @@ class Post extends Model
                 return $this->image_path;
             }
 
-             //return Storage::url($this->image_path);
-             return route('posts.image', $this);
+             return Storage::url($this->image_path);
+             //return route('posts.image', $this);
 
             //  return Storage::temporaryUrl(
             //      $this->image_path,

@@ -18,7 +18,7 @@
        </a>
      </x-slot>
 
-
+      @if($posts->count())
 
     <ul class="space-y-8">
       @foreach ($posts as $post )
@@ -65,6 +65,7 @@
 
     </li>
 
+
       @endforeach
 
     </ul>
@@ -72,4 +73,13 @@
         {{$posts->links()}}
 
     </div>
+
+    @else
+
+<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+    <span class="font-medium">Información</span> Todavía no tienes articulos agregados.
+  </div>
+
+  @endif
+
 </x-admin-layout>

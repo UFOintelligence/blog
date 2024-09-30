@@ -13,7 +13,7 @@
      'url'  => route('admin.categories.index'),
      'active' => request()->routeIs('admin.categories.*'),
      'icon' => 'fa-solid fa-inbox',
-     'can' => 'Gestion de categorias',
+      'can' => 'Gestion de categorias',
 
 ],
 

@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\RoleController;
@@ -23,7 +23,8 @@ Route::resource('/roles', RoleController::class)->except('show')
 ->middleware(['can:Gestion de roles']);
 
 Route::resource('/permission', permissionController::class)->except('show')
- ->middleware(['can:Gestion de permisos']);
+->middleware(['can:Gestion de permisos']);
 
 Route::resource('/users', UserController::class)->except('show', 'create', 'store')
 ->middleware(['can:Gestion de usuarios']);
+

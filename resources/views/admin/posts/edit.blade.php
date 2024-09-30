@@ -1,7 +1,7 @@
 <x-admin-layout :breadcrumb="[
     [
 'name' => 'Home',
-'url'  => route('dashboard'),
+'url'  => route('admin.dashboard'),
 
 ],
 [
@@ -95,7 +95,7 @@
 
             <select class="tag-multiple" name="tags[]" multiple="multiple" style="width: 100%">
 
-               @foreach ($post->tags as $tag)
+                @foreach ($post->tags as $tag)
                <option value="{{ $tag->name }}" selected>
                 {{ $tag->name }}
             </option>

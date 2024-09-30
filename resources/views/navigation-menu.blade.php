@@ -1,18 +1,28 @@
 @php
 
 $links = [
-    [
-            'name' => 'Dashboard',
-            'url' => route('dashboard'),
-            'active' => request()->routeIs('dashboard'),
 
-        ],
-        [
-            'name' => 'Articulos',
-            'url' => route('dashboard'),
+[
+    'name' => 'Dashboard',
+     'url'  => route('admin.dashboard'),
+     'active' => request()->routeIs('admin.dashboard'),
+     'icon' => 'fa-solid fa-gauge-high',
+     'can' => 'Acceso al dashboard',
+
+],
+   [
+
+
+
+            'name' => 'Home',
+            'url' => route('home'),
             'active' => false,
+            'can' => 'Acceso al dashboar',
 
-        ],
+
+],
+
+
 
 ];
 
@@ -26,18 +36,25 @@ $links = [
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{route('home')}}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('home')}}">
+                       Home
+                       <i class="fa fa-solid-home" text-gray-500"></i>
+                    </x-nav-link>
                     @foreach ($links as $link )
 
-                    <x-nav-link :href="$link['url']" :active="$link['active']">
-                        {{ $link['name'] }}
-                    </x-nav-link>
+                    @can($link['can'])
+                   <x-nav-link href="{{ $link['url'] }}" active="">
+                    {{ $link['name'] }}
+                </x-nav-link>
+
+                   @endcan
 
                     @endforeach
                 </div>
@@ -72,10 +89,9 @@ $links = [
                         <x-slot name="content">
 
                             <!-- Account Management -->
-
-                         <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Manage Account') }}
-                        </div>
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Gestión de cuentas') }}
+                            </div>
 
 
 
@@ -167,6 +183,8 @@ $links = [
             </div>
 
             <div class="mt-3 space-y-1">
+
+
                 <!-- Account Management -->
                 <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
