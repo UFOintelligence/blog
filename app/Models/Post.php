@@ -88,6 +88,19 @@ class Post extends Model
         return $this->morphToMany(Tags::class, 'taggable');
     }
 
+   public function scopeFilter($query, $filters){
+    $query->when($filters['category'] ?? null, function($query, $category){
+        $query->whereIn('category_id', $category);
+       })->when($filters['order'] ?? 'new', function($query, $order){
 
+        $sort = $order == 'new' ? 'desc' : 'asc';
+        $query->orderBy('published_at', $sort);
+       })->when($filters['tag'] ?? null, function($query, $tag){
+
+        $query->whereHas('tags', function($query) use ($tag){
+            $query->where('tags.name', $tag);
+        });
+       });
+   }
 
 }

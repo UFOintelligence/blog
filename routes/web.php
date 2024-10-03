@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', WelcomeController::class)->name('home');
 
+Route::get('/posts/{post}', [PostController::class, 'show' ])->name('posts.show');
 // Route::middleware([
 //     'auth:sanctum',
 //     config('jetstream.auth_session'),
@@ -28,7 +30,7 @@ Route::get('/', WelcomeController::class)->name('home');
 //     })->name('Home');
 // });
 
-Route::get('/posts/{post}/image', [PostController::class, 'image'])->name('posts.image');
+// Route::get('/posts/{post}/image', [PostController::class, 'image'])->name('posts.image');
 
 
 
