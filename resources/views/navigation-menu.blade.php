@@ -23,7 +23,6 @@ $links = [
 ],
 
 
-
 ];
 
 
@@ -47,6 +46,10 @@ $links = [
                        Home
                        <i class="fa fa-solid-home" text-gray-500"></i>
                     </x-nav-link>
+                    <x-nav-link href="{{ route('contacts.index')}}">
+                        Contacto
+                        <i class="fa fa-solid-home" text-gray-500"></i>
+                     </x-nav-link>
                     @foreach ($links as $link )
 
                     @can($link['can'])

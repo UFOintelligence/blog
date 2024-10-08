@@ -9,7 +9,6 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\support\facades\Gate;
-
 class PostController extends Controller
 {
     /**
@@ -20,6 +19,7 @@ class PostController extends Controller
     public function index()
     {
         //
+
         $posts = Post::where('user_id', auth()->id())->latest('id')->paginate(10);
         return view('admin.posts.index', compact('posts'));
     }

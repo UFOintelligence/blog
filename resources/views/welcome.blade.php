@@ -2,7 +2,7 @@
 
     <figure class="mb-12">
 
-        <img src="{{ asset('img/home/banner.jpg') }}"
+        <img src="{{ asset('img/home/9.jpg') }}"
         class="w-full  aspect-[3/1] object-cover object-center"
          >
 
