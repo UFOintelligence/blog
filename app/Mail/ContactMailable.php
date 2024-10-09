@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\attachment;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 
@@ -14,6 +15,7 @@ use Illuminate\Mail\Mailables\Address;
 
 class ContactMailable extends Mailable implements ShouldQueue
 {
+
     use Queueable, SerializesModels;
     public $data;
 
@@ -37,7 +39,7 @@ class ContactMailable extends Mailable implements ShouldQueue
     {
         return new Envelope(
             from: new Address($this->data['email'], $this->data['name']),
-            subject: 'Brito academy',
+            subject: 'Brito academy'
         );
     }
 
@@ -64,8 +66,18 @@ class ContactMailable extends Mailable implements ShouldQueue
      *
      * @return array
      */
-    public function attachments()
+
+
+    public function attachments(): array
     {
-        return [];
-    }
+        $attachments = [];
+
+        if (isset($this->data['file'])) {
+            $attachments[] = Attachment::fromStorage( $this->data['file']);
+        }
+
+
+        return $attachments;
+        }
+
 }
