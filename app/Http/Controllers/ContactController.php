@@ -17,12 +17,12 @@ class ContactController extends Controller
             'name' => 'required|string|max:20',
             'email' => 'required|email',
             'message' => 'required|string|max:256',
-            //'file' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
         if ($request->hasFile('file')) {
 
-            $data['file'] = $request->file('file')->store('contacts');
+            $data['file'] = $request->file('file')->storeAs('contacts', $request->file('file')->getClientOriginalName());
+
         }
 
         try {

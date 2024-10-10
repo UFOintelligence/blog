@@ -72,9 +72,16 @@ class ContactMailable extends Mailable implements ShouldQueue
     {
         $attachments = [];
 
-        if (isset($this->data['file'])) {
-            $attachments[] = Attachment::fromStorage( $this->data['file']);
-        }
+        // if (isset($this->data['file'])) {
+        //     $attachments[] = Attachment::fromStorage( $this->data['file']);
+        // }
+
+
+    if (isset($this->data['file'])) {
+        $attachments[] = Attachment::fromStorage($this->data['file'])
+            ->as(basename($this->data['file'])) // Esto establece el nombre del archivo en el email
+            ->withMime($this->data['file']->getMimeType()); // Esto define el tipo MIME del archivo
+    }
 
 
         return $attachments;
