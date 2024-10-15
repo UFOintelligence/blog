@@ -42,7 +42,7 @@
              </div>
 
              <x-label>
-                Archivo
+                Cargar archivo
             </x-label>
 
         <input type="file" name="file" class="w-full"/>

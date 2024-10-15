@@ -79,14 +79,26 @@ class Post extends Model
     }
 
   //Relacion polimorfica uno a mucho
-  public function comments(){
-    return $this->morphMony(Comment::class, 'commentable');
-}
+
+public function comments(){
+
+
+    return $this->morphMany(Comment::class, 'commentable');
+
+    }
+
 
     //Relacion muchos a muchos polimorfica
     public function tags(){
         return $this->morphToMany(Tags::class, 'taggable');
     }
+
+    //Relacion uno a muchos polimorfica
+    public function questions(){
+
+        return $this->morphMany(Question::class, 'questionable');
+    }
+
 
    public function scopeFilter($query, $filters){
     $query->when($filters['category'] ?? null, function($query, $category){

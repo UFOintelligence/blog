@@ -9,8 +9,10 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\support\facades\Gate;
+use Livewire\WithPagination;
 class PostController extends Controller
 {
+    use WithPagination;
     /**
      * Display a listing of the resource.
      *

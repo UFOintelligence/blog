@@ -36,6 +36,12 @@
             {{ $post->body }}
         </div>
 
+       <div class="mt-16">
+
+        @livewire('question', ['model' => $post])
+
+       </div>
+
     </section>
 
 
